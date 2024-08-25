@@ -53,15 +53,19 @@ describe("NFTMarketplace", function () {
         marketplace.connect(addr1).makeItem(nft.address, 1, toWei(1))
       )
         .to.emit(marketplace, "offered")
-        .withArgs(1, nft.address, 1, toWei(1), addr1.address)
+        .withArgs(1, nft.address, 1, toWei(1), addr1.address);
 
-
-        //owner of the nft should now be the marketplace
-        expect(await nft.ownerOf(1)).to.equal(marketplace.address);
-        //item count should be 1
-        expect(await marketplace.itemCount()).to.equal(1)
-        //
-
+      //owner of the nft should now be the marketplace
+      expect(await nft.ownerOf(1)).to.equal(marketplace.address);
+      //item count should be 1
+      expect(await marketplace.itemCount()).to.equal(1);
+      //get the item from items mapping then check fields to ensure they are correct
+      const item = await marketplace.items(1);
+      expect(item.itemId).to.equal(1);
+      expect(item.nft).to.equal(nft.address);
+      expect(item.itemId).to.equal(1);
+      expect(item.price).to.equal(toWei(1));
+      expect(item.sold).to.equal(false);
     });
   });
 });
