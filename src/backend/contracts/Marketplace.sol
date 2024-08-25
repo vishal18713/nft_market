@@ -16,6 +16,14 @@ contract Marketplace is ReentrancyGuard {
         address payable seller;
         bool sold;
     }
+
+    event offered(
+        uint itemId;
+        address indexed nft;
+        uint tokenId;
+        uint price;
+        address indexed seller;
+    );
     mapping(uint => Item) public items;
 
     constructor(uint _feePercent) {
